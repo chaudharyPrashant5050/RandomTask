@@ -1,8 +1,10 @@
 package com.example.randomtask
 
+import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -16,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val url = "https://www.boredapi.com/api/activity"
     private  var requestQueue: RequestQueue? = null
+    lateinit var viewModel:ViewModelMain
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +27,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
+         viewModel = ViewModelProvider(this).get(ViewModelMain::class.java)
         requestQueue = Volley.newRequestQueue(this)
+        binding.taskText.text = viewModel.getString()
 
         binding.btnNext.setOnClickListener {
 
@@ -36,8 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         val request = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
                 response ->try {
-            val jsonArray = response.getString("activity")
-            binding.taskText.text = jsonArray
+            viewModel.setString(response.getString("activity").toString())
+            binding.taskText.text = viewModel.getString()
         } catch (e: JSONException) {
             e.printStackTrace()
         }
