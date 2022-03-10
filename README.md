@@ -1,6 +1,10 @@
 # RandomTask
 
 
+#App is using API that generate random task.
+
+
+
 #SPLASH SCREEN
 
 ![](https://github.com/chaudharyPrashant5050/RandomTask/blob/master/screenShot/Screenshot_2022-03-10-13-29-17-852_com.example.randomtask.jpg)
